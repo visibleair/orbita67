@@ -30,8 +30,6 @@ fun HomeNavGraph(navController: NavHostController) {
                 }
             )
         }
-
-
         composable(route = BottomBarScreen.Search.route) {
             SearchScreenContent(
                 onClick = {
@@ -49,8 +47,6 @@ fun HomeNavGraph(navController: NavHostController) {
             ProductDetail()
 
         }
-
-        //detailsNavGraph(navController = navController)
     }
 }
 

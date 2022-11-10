@@ -87,88 +87,34 @@ fun SearchScreenContent(onClick: () -> Unit) {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun CountryList(textVal: MutableState<TextFieldValue>, onClick: () -> Unit) {
-    val context = LocalContext.current
-    val countries = MainActivity().getListOfCountries()
-    var filteredCountries: ArrayList<Array<String>>
-    val navController = rememberNavController()
-
-
+    val products = MainActivity().getListOfProducts()
+    var filteredProducts: ArrayList<Array<String>>
     LazyVerticalGrid(
         cells = GridCells.Adaptive(minSize = 150.dp),
     ) {
         val searchText = textVal.value.text
-        filteredCountries = if (searchText.isEmpty()) {
-            countries
+        filteredProducts = if (searchText.isEmpty()) {
+            products
         } else {
             val resultList = ArrayList<Array<String>>()
-            for (country in countries) {
-                if ((country[0] + country[1]).lowercase().contains(searchText.lowercase())) {
-                    resultList.add(country)
+            for (product in products) {
+                if ((product[0] + product[1]).lowercase().contains(searchText.lowercase())) {
+                    resultList.add(product)
                 }
             }
             resultList
         }
-
-        items(filteredCountries) { filteredCountries: Array<String> ->
+        items(filteredProducts) { filteredCountries: Array<String> ->
             CardItem(
                 countryText = filteredCountries,
                 onItemClick = { selectedCountry ->
                     onClick()
-                    Toast.makeText(context, selectedCountry[0], Toast.LENGTH_SHORT).show()
-
-
                 }
             )
         }
     }
 }
 
-
-@Composable
-fun CountryListItem(
-    countryText: Array<String>,
-    onItemClick: (Array<String>) -> Unit
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable { onItemClick(countryText) },
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            text = countryText[2],
-            modifier = Modifier
-                .padding(10.dp)
-                .width(40.dp),
-            textAlign = TextAlign.Center,
-            fontWeight = FontWeight.Bold
-        )
-        Image(
-            painter = painterResource(id = R.drawable.ic_profile),
-            contentDescription = "image",
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .padding(0.dp, 10.dp)
-                .size(64.dp)
-                .clip(CircleShape)
-        )
-        Column(
-            modifier = Modifier.padding(15.dp, 0.dp, 0.dp, 0.dp)
-        ) {
-            Text(
-                text = countryText[0],
-                fontWeight = FontWeight.Bold,
-                letterSpacing = 1.sp
-            )
-            Text(
-                text = countryText[1],
-                color = Color.Gray,
-                letterSpacing = 1.sp
-            )
-            CountCrown(count = countryText[3], R.drawable.ic_notifications)
-        }
-    }
-}
 
 
 
@@ -259,23 +205,5 @@ fun SearchTopBar(textVal: MutableState<TextFieldValue>) {
 
 
 
-@Composable
-fun CountCrown(count: String, icon: Int) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically
-    ){
-        Text(text = count,
-            color = Color(0xFFEBB52C),
-            fontWeight = FontWeight.Bold,
-            letterSpacing = 1.sp,
-            fontFamily = cera_round_pro_regular)
-        Image(painter = painterResource(id = icon),
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .padding(5.dp, 0.dp)
-                .size(10.dp)
-        )
-    }
-}
+
 

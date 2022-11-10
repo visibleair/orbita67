@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
 
 
 
-    fun getListOfCountries(): ArrayList<Array<String>> {
+    fun getListOfProducts(): ArrayList<Array<String>> {
         for (i in 1..2) {
             Array.add(arrayOf("Американо", "Описание", "120"))
             Array.add(arrayOf("Капучино", "Описание", "120"))

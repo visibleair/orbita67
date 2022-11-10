@@ -302,7 +302,7 @@ fun BestSellerSection(onClick: () -> Unit) {
             contentPadding = PaddingValues(horizontal = 10.dp),
             horizontalArrangement = Arrangement.spacedBy(5.dp)
         ) {
-            items(MainActivity().getListOfCountries()) { filteredCountries: Array<String> ->
+            items(MainActivity().getListOfProducts()) { filteredCountries: Array<String> ->
                 CardItem(
                     countryText = filteredCountries,
                     onItemClick = { selectedCountry ->
@@ -341,7 +341,7 @@ fun NewSection(onClick: () -> Unit) {
             contentPadding = PaddingValues(horizontal = 10.dp),
             horizontalArrangement = Arrangement.spacedBy(5.dp)
         ) {
-            items(MainActivity().getListOfCountries()) { filteredCountries: Array<String> ->
+            items(MainActivity().getListOfProducts()) { filteredCountries: Array<String> ->
                 CardItem(
                     countryText = filteredCountries,
                     onItemClick = { selectedCountry ->
