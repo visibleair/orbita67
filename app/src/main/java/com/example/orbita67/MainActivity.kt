@@ -13,7 +13,6 @@ import androidx.core.view.updatePadding
 import androidx.navigation.compose.rememberNavController
 import com.example.orbita67.model.graphs.RootNavigationGraph
 import com.example.orbita67.ui.theme.Orbita67Theme
-import com.example.orbita67.view.ProductDetail
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,6 +26,32 @@ class MainActivity : ComponentActivity() {
             view.updatePadding(bottom = bottom)
             insets
         }
+
+    }
+    val Array = ArrayList<Array<String>>()
+
+
+
+    fun getListOfCountries(): ArrayList<Array<String>> {
+        for (i in 1..2) {
+            Array.add(arrayOf("Американо", "Описание", "120"))
+            Array.add(arrayOf("Капучино", "Описание", "120"))
+            Array.add(arrayOf("Айс Капучино", "Описание", "120"))
+            Array.add(arrayOf("Латте", "Описание", "120"))
+            Array.add(arrayOf("Айс Латте", "Описание", "125"))
+            Array.add(arrayOf("Раф", "Описание", "121"))
+            Array.add(arrayOf("Айс Раф", "Описание", "130"))
+            Array.add(arrayOf("Флэт Уайт", "Описание", "141"))
+            Array.add(arrayOf("Двойной эспрессо", "Описание", "120"))
+            Array.add(arrayOf("Какао", "Описание", "120"))
+            Array.add(arrayOf("Горячий шоколад", "Описание", "75"))
+
+        }
+        val countryListWithEmojis = ArrayList<Array<String>>()
+        for (j in 0 until Array.size) {
+            countryListWithEmojis.add(arrayOf(Array[j][0], Array[j][1], j.toString(), Array[j][2]))
+        }
+        return countryListWithEmojis
     }
 }
 

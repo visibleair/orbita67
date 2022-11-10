@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.orbita67.R
@@ -20,7 +21,7 @@ import com.example.orbita67.ui.theme.*
 
 @ExperimentalMaterialApi
 @Composable
-fun SettingsScreenContent() {
+fun ProfileContent() {
     Column() {
         HeaderText()
         ProfileCardUI()
@@ -33,7 +34,7 @@ fun SettingsScreenContent() {
 @Composable
 fun HeaderText() {
     Text(
-        text = "Settings",
+        text = "Настройки",
         fontFamily = cera_round_pro_regular,
         color = Color.Black,
         textAlign = TextAlign.Center,
@@ -62,7 +63,7 @@ fun ProfileCardUI() {
         ) {
             Column() {
                 Text(
-                    text = "Check Your Profile",
+                    text = "Ваш профиль",
                     fontFamily = cera_round_pro_regular,
                     color = Color.Black,
                     fontSize = 16.sp,
@@ -70,7 +71,7 @@ fun ProfileCardUI() {
                 )
 
                 Text(
-                    text = "UI.Stack.YT@gmail.com",
+                    text = "gon.john@yandex.ru",
                     fontFamily = cera_round_pro_regular,
                     color = Color.Gray,
                     fontSize = 10.sp,
@@ -91,7 +92,7 @@ fun ProfileCardUI() {
                     shape = Shapes.medium
                 ) {
                     Text(
-                        text = "View",
+                        text = "Посмотреть",
                         fontFamily = cera_round_pro_regular,
                         color = SecondaryColor,
                         fontSize = 12.sp,
@@ -117,22 +118,22 @@ fun GeneralOptionsUI() {
             .padding(top = 10.dp)
     ) {
         Text(
-            text = "General",
+            text = "Общие",
             fontFamily = cera_round_pro_regular,
-            color = SecondaryColor,
+            color = Color(0xFF2B3046),
             fontSize = 14.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
                 .padding(vertical = 8.dp)
         )
         GeneralSettingItem(
-            icon = R.drawable.ic_favourites,
-            mainText = "Notifications",
-            subText = "Customize notifications",
+            icon = R.drawable.ic_notifications,
+            mainText = "Уведомления",
+            subText = "Настроить уведомления",
             onClick = {}
         )
         GeneralSettingItem(
-            icon = R.drawable.ic_favourites,
+            icon = R.drawable.angle_right,
             mainText = "More customization",
             subText = "Customize it more to fit your usage",
             onClick = {}
@@ -179,7 +180,7 @@ fun GeneralSettingItem(icon: Int, mainText: String, subText: String, onClick: ()
                     Text(
                         text = mainText,
                         fontFamily = cera_round_pro_regular,
-                        color = SecondaryColor,
+                        color = Color(0xFF2B3046),
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Bold,
                     )
@@ -213,31 +214,31 @@ fun SupportOptionsUI() {
             .padding(top = 10.dp)
     ) {
         Text(
-            text = "Support",
+            text = "Поддержка",
             fontFamily = cera_round_pro_regular,
-            color = SecondaryColor,
+            color = Color(0xFF2B3046),
             fontSize = 14.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
                 .padding(vertical = 8.dp)
         )
         SupportItem(
-            icon = R.drawable.ic_favourites,
+            icon = R.drawable.angle_right,
             mainText = "Contact",
             onClick = {}
         )
         SupportItem(
-            icon = R.drawable.ic_favourites,
+            icon = R.drawable.angle_right,
             mainText = "Feedback",
             onClick = {}
         )
         SupportItem(
-            icon = R.drawable.ic_favourites,
+            icon = R.drawable.angle_right,
             mainText = "Privacy Policy",
             onClick = {}
         )
         SupportItem(
-            icon = R.drawable.ic_favourites,
+            icon = R.drawable.angle_right,
             mainText = "About",
             onClick = {}
         )
@@ -282,7 +283,7 @@ fun SupportItem(icon: Int, mainText: String, onClick: () -> Unit) {
                 Text(
                     text = mainText,
                     fontFamily = cera_round_pro_regular,
-                    color = SecondaryColor,
+                    color = Color(0xFF2B3046),
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
                 )
@@ -295,4 +296,11 @@ fun SupportItem(icon: Int, mainText: String, onClick: () -> Unit) {
 
         }
     }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+@Preview
+fun Prw(){
+    ProfileContent()
 }

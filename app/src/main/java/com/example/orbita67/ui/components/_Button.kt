@@ -1,4 +1,4 @@
-package com.example.orbita67.view.components
+package com.example.orbita67.ui.components
 
 import android.util.Size
 import androidx.compose.foundation.BorderStroke

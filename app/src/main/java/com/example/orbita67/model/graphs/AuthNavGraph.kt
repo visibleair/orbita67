@@ -10,7 +10,7 @@ import com.example.orbita67.view.screens.RegisterScreen
 
 fun NavGraphBuilder.authNavGraph(navController: NavHostController) {
     navigation(
-        route = Graph.AUTHENTICATION,
+        route = "auth_graph",
         startDestination = AuthScreen.Login.route
     ) {
         composable(route = AuthScreen.Login.route) {
@@ -23,7 +23,7 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController) {
                 },
                 onForgotClick = {
                     navController.popBackStack()
-                    navController.navigate(Graph.HOME)
+                    navController.navigate("home_graph")
                 }
             )
         }
@@ -36,7 +36,7 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController) {
             CodeAccept (
                 onClick = {
                     navController.popBackStack()
-                    navController.navigate(Graph.HOME)
+                    navController.navigate("home_graph")
                 }
             )
         }

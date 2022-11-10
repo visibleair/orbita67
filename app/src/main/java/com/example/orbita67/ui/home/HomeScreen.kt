@@ -1,85 +1,65 @@
 package com.example.orbita67.view.screens
 
-import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.FavoriteBorder
-import androidx.compose.material.icons.outlined.Notifications
-import androidx.compose.material.icons.rounded.Search
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.focus.onFocusEvent
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Gray
-import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.graphics.Color.Companion.White
-import androidx.compose.ui.graphics.FilterQuality.Companion.Medium
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
+import com.example.orbita67.MainActivity
 import com.example.orbita67.R
-import com.example.orbita67.model.graphs.data.Product
+import com.example.orbita67.ui.components.CardItem
 import com.example.orbita67.ui.theme.*
-import com.example.orbita67.view.screens.HomeScreen.CountryNavigation
 import com.google.accompanist.pager.ExperimentalPagerApi
-import kotlinx.coroutines.launch
-import java.util.ArrayList
 
 
 @Composable
-fun HomeContent(onClick: () -> Unit){
-    HomeScreenContent()
+fun HomeContent(onClick: () -> Unit, onSearchBarClick: () -> Unit){
+    Box(modifier = Modifier
+        .fillMaxSize())
+    {
+        HomeScreenContent(onClick = { onClick() }, onSearchBarClick = {onSearchBarClick()})
+    }
+
 }
 
 
 
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    HomeScreenContent()
-}
+
 
 @Composable
-fun HomeScreenContent() {
+fun HomeScreenContent(onClick: () -> Unit, onSearchBarClick: () -> Unit) {
     Box(Modifier.verticalScroll(rememberScrollState())) {
         Column() {
 
-            Content()
+            Content(onClick = { onClick()}, onSearchBarClick = { onSearchBarClick()})
         }
     }
 }
 
 @Composable
-fun SearchBar() {
+fun SearchBar(onSearchBarClick: () -> Unit) {
     TextField(
         maxLines = 1,
         value = "", onValueChange = {
@@ -97,7 +77,12 @@ fun SearchBar() {
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 20.dp)
-            .padding(top = 10.dp),
+            .padding(top = 10.dp)
+            .onFocusChanged { event ->
+                if(event.isFocused){
+                    onSearchBarClick()
+                }
+            },
         colors = TextFieldDefaults.textFieldColors(
             textColor = Color.White,
             backgroundColor = Color(0xFF68686A),
@@ -129,7 +114,7 @@ fun SearchBar() {
         },
         keyboardOptions = KeyboardOptions(
             keyboardType =
-            KeyboardType.Phone,
+            KeyboardType.Text,
             imeAction = ImeAction.Done
         ),
         singleLine = true,
@@ -153,8 +138,8 @@ fun SearchBar() {
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun Content() {
-    Spacer(modifier = Modifier.height(16.dp))
+fun Content(onClick: () -> Unit, onSearchBarClick: () -> Unit) {
+    Spacer(modifier = Modifier.height(36.dp))
     Column {
         Text(
             modifier = Modifier
@@ -168,36 +153,18 @@ fun Content() {
             fontFamily = cera_round_pro_regular,
             color = Color.Black
         )
-        SearchBar()
+        SearchBar(onSearchBarClick = { onSearchBarClick() })
         Spacer(modifier = Modifier.height(16.dp))
         Promotions()
         Spacer(modifier = Modifier.height(16.dp))
-        TabScreen()
+        BestSellerSection(onClick = {onClick()})
         Spacer(modifier = Modifier.height(16.dp))
-        BestSellerSection()
-
+        NewSection(onClick = {onClick()})
+        Spacer(modifier = Modifier.height(60.dp))
     }
 }
 
-@Composable
-fun ServingCalculator() {
-    var value by remember { mutableStateOf(0) }
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .clip(Shapes.medium)
-            .padding(horizontal = 16.dp)
-    ) {
-        //Text(text = "Serving", Modifier.weight(1f), fontWeight = Medium)
 
-        if(value>0){
-            CircularButton(iconResouce = R.drawable.ic_minus, elevation = null, color = PrimaryColor) { value-- }
-            //Text(text = "$value", Modifier.padding(16.dp), fontWeight = Medium)
-            Text(text = "$value")
-        }
-        CircularButton(iconResouce = R.drawable.ic_plus, elevation = null, color = PrimaryColor) { value++ }
-    }
-}
 
 
 
@@ -235,17 +202,17 @@ fun Promotions() {
         item {
             PromotionItem(
                 imagePainter = painterResource(id = R.mipmap.ic_launcher_foreground),
-                title = "Fruit",
-                subtitle = "Start @",
-                header = "$1",
+                title = "Второй напиток",
+                subtitle = "От",
+                header = "160₽",
                 backgroundColor = Color(0xFF2B3046)
             )
         }
         item {
             PromotionItem(
                 imagePainter = painterResource(id = R.mipmap.ic_launcher_foreground),
-                title = "Meat",
-                subtitle = "Discount",
+                title = "Скидка",
+                subtitle = "На самовывоз",
                 header = "20%",
                 backgroundColor = Color(0xFFE17546)
             )
@@ -253,18 +220,18 @@ fun Promotions() {
         item {
             PromotionItem(
                 imagePainter = painterResource(id = R.mipmap.ic_launcher_foreground),
-                title = "Meat",
-                subtitle = "Discount",
-                header = "20%",
+                title = "Счастливые",
+                subtitle = "часы",
+                header = "13:00 - 16:00",
                 backgroundColor = Color(0xFFFBC370)
             )
         }
         item {
             PromotionItem(
                 imagePainter = painterResource(id = R.mipmap.ic_launcher_foreground),
-                title = "Meat",
-                subtitle = "Discount",
-                header = "20%",
+                title = "Мы",
+                subtitle = "Открылись",
+                header = "Ура!",
                 backgroundColor = Color(0xFF135D6E)
             )
         }
@@ -310,105 +277,88 @@ fun PromotionItem(
 
 
 @Composable
-fun BestSellerSection() {
+fun BestSellerSection(onClick: () -> Unit) {
     Column() {
         Row(
             Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-                .padding(bottom = 40.dp),
+                .padding(horizontal = 20.dp)
+                .padding(bottom = 10.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            Text(text = "Популярные", style = MaterialTheme.typography.h6)
+            Text(
+                text = "Популярные",
+                fontFamily = cera_round_pro_regular,
+                color = Color(0xFF2B3046),
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold)
             TextButton(onClick = {}) {
-                Text(text = "More", color = MaterialTheme.colors.primary)
+                Text(text = "Подробнее", color = Color(0xFF2B3046))
             }
         }
 
-        BestSellerItems()
-    }
-}
-
-@Composable
-fun BestSellerItems() {
-    LazyRow(
-        contentPadding = PaddingValues(horizontal = 16.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        item {
-            BestSellerItem(
-                imagePainter = painterResource(id = R.mipmap.ic_launcher_foreground),
-                title = "Iceberg Lettuce",
-                price = "1.99",
-                discountPercent = 10
-            )
-        }
-        item {
-            BestSellerItem(
-                imagePainter = painterResource(id = R.mipmap.ic_launcher_foreground),
-                title = "Apple",
-                price = "2.64",
-                discountPercent = 5
-            )
-        }
-        item {
-            BestSellerItem(
-                imagePainter = painterResource(id = R.mipmap.ic_launcher_foreground),
-                title = "Meat",
-                price = "4.76",
-                discountPercent = 20
-            )
-        }
-    }
-}
-
-@Composable
-fun BestSellerItem(
-    title: String = "",
-    price: String = "",
-    discountPercent: Int = 0,
-    imagePainter: Painter
-) {
-    Card(
-        Modifier
-            .width(160.dp)
-    ) {
-        Column(
-            Modifier
-                .padding(bottom = 32.dp)
+        LazyRow(
+            contentPadding = PaddingValues(horizontal = 10.dp),
+            horizontalArrangement = Arrangement.spacedBy(5.dp)
         ) {
-            Image(
-                painter = imagePainter, contentDescription = "",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(1f),
-                contentScale = ContentScale.Fit
-            )
-            Column(
-                Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 8.dp)
-            ) {
-                Text(text = title, fontWeight = FontWeight.Bold)
-                Row {
-                    Text(
-                        "$${price}",
-                        textDecoration = if (discountPercent > 0)
-                            TextDecoration.LineThrough
-                        else
-                            TextDecoration.None,
-                        color = if (discountPercent > 0) Color.Gray else Color.Black
-                    )
-                    if (discountPercent > 0) {
-                        Text(text = "[$discountPercent%]", color = MaterialTheme.colors.primary)
+            items(MainActivity().getListOfCountries()) { filteredCountries: Array<String> ->
+                CardItem(
+                    countryText = filteredCountries,
+                    onItemClick = { selectedCountry ->
+                        onClick()
                     }
-                    ServingCalculator()
-                }
+                )
             }
         }
     }
 }
+
+
+
+@Composable
+fun NewSection(onClick: () -> Unit) {
+    Column() {
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp)
+                .padding(bottom = 10.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = "Новинки",
+                fontFamily = cera_round_pro_regular,
+                color = Color(0xFF2B3046),
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold)
+            TextButton(onClick = {}) {
+                Text(text = "Подробнее", color = Color(0xFF2B3046 ))
+            }
+        }
+        LazyRow(
+            contentPadding = PaddingValues(horizontal = 10.dp),
+            horizontalArrangement = Arrangement.spacedBy(5.dp)
+        ) {
+            items(MainActivity().getListOfCountries()) { filteredCountries: Array<String> ->
+                CardItem(
+                    countryText = filteredCountries,
+                    onItemClick = { selectedCountry ->
+                        onClick()
+                    }
+                )
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
 
 
 

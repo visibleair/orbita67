@@ -11,19 +11,13 @@ import com.example.orbita67.view.screens.HomeScreen
 fun RootNavigationGraph(navController: NavHostController) {
     NavHost(
         navController = navController,
-        route = Graph.ROOT,
-        startDestination = Graph.AUTHENTICATION
+        route = "root_graph",
+        startDestination = "auth_graph"
     ) {
         authNavGraph(navController = navController)
-        composable(route = Graph.HOME) {
+        composable(route = "home_graph") {
             HomeScreen()
         }
     }
 }
 
-object Graph {
-    const val ROOT = "root_graph"
-    const val AUTHENTICATION = "auth_graph"
-    const val HOME = "home_graph"
-    const val DETAILS = "details_graph"
-}
