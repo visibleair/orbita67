@@ -1,7 +1,6 @@
 package com.example.orbita67.view.screens
 
 import TabItem
-import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.compose.animation.Animatable
 import androidx.compose.foundation.*
@@ -376,11 +375,6 @@ fun NewSection(onClick: () -> Unit) {
     }
 }
 
-@Preview
-@Composable
-fun ComposablePreview() {
-    HomeContent(onClick = {}, onSearchBarClick = {})
-}
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
@@ -395,7 +389,7 @@ fun Tabs(tabs: List<TabItem>, pagerState: PagerState) {
         contentColor = Color.White,
         modifier = Modifier
             .padding(20.dp)
-            .background(color = Black)
+            .background(color = White)
             .clip(RoundedCornerShape(30.dp)),
         indicator = { tabPositions ->
             TabRowDefaults.Indicator(
@@ -438,7 +432,13 @@ fun TabsContent(tabs: List<TabItem>, pagerState: PagerState) {
         tabs[page].screen()
     }
 }
-
+@Composable
+@Preview
+fun Preview(){
+    HomeContent(onClick = { /*TODO*/ }) {
+        
+    }
+}
 
 
 

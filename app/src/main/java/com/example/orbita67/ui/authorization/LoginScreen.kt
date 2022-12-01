@@ -198,6 +198,26 @@ fun LoginScreen(
                             fontSize = 14.sp,
                             fontWeight = FontWeight.SemiBold)
                     }
+                    Button(
+                        enabled = isFormValid,
+                        onClick = { onSignUpClick() },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 20.dp)
+                            .padding(top = 20.dp, bottom = 20.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = PrimaryColor,
+                            contentColor = Color.White
+                        ),
+                        contentPadding = PaddingValues(vertical = 14.dp),
+                        shape = BottomBoxShape.medium
+                    ) {
+
+                        Text(text = "Далее",
+                            fontFamily = cera_round_pro_regular,
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.SemiBold)
+                    }
 
 
 

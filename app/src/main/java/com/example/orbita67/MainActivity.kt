@@ -1,26 +1,38 @@
 package com.example.orbita67
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
 import com.example.orbita67.model.graphs.RootNavigationGraph
 import com.example.orbita67.ui.theme.Orbita67Theme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
-            RootNavigationGraph(navController = rememberNavController())
+            val viewModel = hiltViewModel<MainViewModel>()
+            viewModel.getAllMovies()
+
+            RootNavigationGraph(navController = rememberNavController(), viewModel = viewModel)
+
+
         }
+
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(android.R.id.content)){view,insets ->
             val bottom = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom
             view.updatePadding(bottom = bottom)
@@ -28,10 +40,9 @@ class MainActivity : ComponentActivity() {
         }
 
     }
+
+
     val Array = ArrayList<Array<String>>()
-
-
-
     fun getListOfProducts(): ArrayList<Array<String>> {
         for (i in 1..2) {
             Array.add(arrayOf("Американо", "Описание", "120"))

@@ -1,25 +1,30 @@
 package com.example.orbita67.model.graphs
 
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.example.orbita67.MainViewModel
+import com.example.orbita67.ui.authorization.DetailsScreen
+import com.example.orbita67.ui.home.MoviesScreen
 import com.example.orbita67.view.screens.CodeAccept
 import com.example.orbita67.view.screens.LoginScreen
 import com.example.orbita67.view.screens.RegisterScreen
 
-fun NavGraphBuilder.authNavGraph(navController: NavHostController) {
+fun NavGraphBuilder.authNavGraph(navController: NavHostController, viewModel: MainViewModel) {
     navigation(
         route = "auth_graph",
-        startDestination = AuthScreen.Login.route
+        startDestination = "LOGIN"
     ) {
-        composable(route = AuthScreen.Login.route) {
+        composable(route = "LOGIN") {
             LoginScreen(
                 onClick = {
-                    navController.navigate(AuthScreen.Forgot.route)
+                    navController.navigate("FORGOT")
                 },
                 onSignUpClick = {
-                    navController.navigate(AuthScreen.SignUp.route)
+                    navController.navigate("SIGN_UP")
                 },
                 onForgotClick = {
                     navController.popBackStack()
@@ -27,12 +32,13 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController) {
                 }
             )
         }
-        composable(route = AuthScreen.SignUp.route) {
-            RegisterScreen(
-
-            )
+        composable(route = "SIGN_UP") {
+            MoviesScreen(navController = navController,viewModel = viewModel)
         }
-        composable(route = AuthScreen.Forgot.route) {
+        composable(route = "DETAILS" + "/{Id}") { backStackEntry ->
+            DetailsScreen(viewModel = viewModel, itemId = backStackEntry.arguments?.getString("Id")?: "1" )
+        }
+        composable(route = "FORGOT") {
             CodeAccept (
                 onClick = {
                     navController.popBackStack()
